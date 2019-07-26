@@ -1,0 +1,10 @@
+td=read.csv("C:/Users/HP/Documents/dataset/Telecom_Data.csv")
+View(td)
+td_1=td[-4]
+trainset=td_1[1:2400,]
+testset=td_1[2401:3333,]
+model=randomForest(churn~.,ntree=350,data=trainset)
+testset$predicted_prob=predict(model,testset)
+testset$binary=ifelse(testset$predicted_prob>0.50,TRUE,FALSE)
+table(testset$churn,testset$binary)
+varImpPlot(model)
